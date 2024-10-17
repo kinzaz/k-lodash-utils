@@ -288,3 +288,60 @@ function sortedIndexOf(array, target) {
   }
   return -1;
 }
+
+function union(...arrays) {
+  const result = [];
+  const hashTable = {};
+  const flattened = flatten(arrays);
+
+  for (let index = 0; index < flattened.length; index++) {
+    if (!hashTable[flattened[index]]) {
+      hashTable[flattened[index]] = true;
+      result.push(flattened[index]);
+    }
+  }
+
+  return result;
+}
+
+function uniq(array) {
+  const result = [];
+  const hashTable = {};
+
+  for (let index = 0; index < array.length; index++) {
+    if (!hashTable[array[index]]) {
+      hashTable[array[index]] = true;
+      result.push(array[index]);
+    }
+  }
+
+  return result;
+}
+
+function zip(...arrays) {
+  const result = [];
+  let longestArr = arrays[0].length;
+  for (let index = 0; index < arrays.length; index++) {
+    const array = arrays[index];
+    if (longestArr < array.length) {
+      longestArr = array.length;
+    }
+  }
+
+  for (let index = 0; index < longestArr; index++) {
+    const row = [];
+
+    for (let arrayIndex = 0; arrayIndex < arrays.length; arrayIndex++) {
+      const element = arrays[arrayIndex][index];
+
+      if (element === undefined) {
+        row.push(undefined);
+      } else {
+        row.push(element);
+      }
+    }
+    result.push(row);
+  }
+
+  return result;
+}
