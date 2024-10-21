@@ -345,3 +345,50 @@ function zip(...arrays) {
 
   return result;
 }
+
+function unzip(arrays) {
+  const maxLength = Math.max(...arrays.map((arr) => arr.length)); // Находим максимальную длину вложенных массивов
+  const result = [];
+
+  for (let i = 0; i < maxLength; i++) {
+    const row = [];
+    for (let j = 0; j < arrays.length; j++) {
+      row.push(arrays[j][i] ?? undefined); // Берем элемент по индексу или undefined, если его нет
+    }
+    result.push(row);
+  }
+
+  return result;
+}
+
+function at(object, paths) {
+  return paths.map((path) =>
+    path
+      .split(/[\.\[\]\'\"]/)
+      .filter(Boolean)
+      .reduce((acc, key) => {
+        return acc && acc[key];
+      }, object)
+  );
+}
+
+function get(object, path) {
+  return path
+    .split(/\[|\]|\./)
+    .filter(Boolean)
+    .reduce((acc, key) => {
+      return acc && acc[key];
+    }, object);
+}
+
+function omit(object, keys) {
+  const result = {};
+  for (const key in object) {
+    if (object.hasOwnProperty(key) && !keys.includes(key)) {
+      result[key] = object[key];
+    }
+  }
+  return result;
+}
+
+console.log(omit({ a: 1, b: "2", c: 3 }, ["a", "c"]));
